@@ -5,38 +5,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
     audio.loop = true;
     const alarmInput = document.querySelector("input[name='alarm']");
     const setAlarm = document.getElementById('set-alarm');
-    console.log(setAlarm);
+    const clearAlarm = document.getElementById('clear-alarm');
 
     let alarmTime = null;
     let alarmTimeout = null;
 
-    function formatTime(time) {
-        if ( time < 10 ) {
-            time = '0'+time;
-        }
-
-        return time;
-
-    }
-
-
-
-
     //CREATION ET AFFICHAGE DE L'HORLOGE  ----------------------------------------
 
     function updateTime(){
-        const date = new Date();
-        const hour = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
+        let date = new Date();
+        let hour = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
 
-        formatTime(hour);
-        formatTime(minutes);
-        formatTime(seconds);
+        if (hour<10) {
+            hour = '0'+hour
+        }
+
+        if (minutes<10) {
+            minutes ='0'+ minutes
+        }
+
+        if (seconds<10) {
+            seconds = '0'+ seconds
+        }
 
         display.innerText=`${hour}:${minutes}:${seconds}`;
 
     }
+
+    setInterval(updateTime, 1000);
 
 
 
@@ -58,15 +56,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
             //Si l'alarme est bien paramétrée pour un moment ultérieur à l'instant présent alors on paramètre l'alarme
             if(timeToAlarm > current ) {
                 const timeout = timeToAlarm.getTime() - current.getTime();
-                console.log(timeout);
                 alarmTimeout = setTimeout(()=>audio.play(), timeout);
+                console.log(alarmTimeout);
                 alert('Alarm set');
             }
-
-
-
             
         }
+    })
+
+    //Permet d'unset l'alarm si on appuie sur le bouton
+    clearAlarm.addEventListener('click', (event) => {
+        audio.pause();
+
+        //Reset l'alarmTimeout
+        if(alarmTimeout) {
+            clearTimeout(alarmTimeout);
+            alert('Alarm cleared');
+            console.log(alarmTimeout);
+            alarmInput.value = '';
+        }
+        
     })
 
 
@@ -77,6 +86,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   
 
-    setInterval(updateTime, 1000);
+    
 
 })
