@@ -6,23 +6,18 @@ body, html {
     
 }
 
-
-/* CLOCK AND ALARM */
-
-#oclock-alarm {
-    min-height:100vh;
+.row_container {
     display:flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items:center;
-    margin-top:200px;
+    flex-direction:row;
+    justify-content: space-around;
+    margin: 0 auto;
+    margin-top:10%;
+    width:80%;
 }
 
-#clock {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 15vw;
-    color:white;
-}
+
+/*ALARM */
+
 
 .controls {
     margin-top:16px;
@@ -46,6 +41,9 @@ body, html {
     background-color:red;
 }
 
+#alarm-list {
+    color:white;
+}
 #countdown-timer {
     height:200px;
     width:700px;

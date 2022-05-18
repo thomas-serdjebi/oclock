@@ -1,16 +1,8 @@
 document.addEventListener('DOMContentLoaded', (event) => {
 
-    const display = document.getElementById('clock');
-    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
-    audio.loop = true;
-    const alarmInput = document.querySelector("input[name='alarm']");
-    const setAlarm = document.getElementById('set-alarm');
-    const clearAlarm = document.getElementById('clear-alarm');
-
-    let alarmTime = null;
-    let alarmTimeout = null;
-
     //CREATION ET AFFICHAGE DE L'HORLOGE  ----------------------------------------
+
+    const display = document.getElementById('clock');
 
     function updateTime(){
         let date = new Date();
@@ -40,10 +32,57 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     //CREATION ET PARAMETRAGE DE L'ALARME  ----------------------------
 
+    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
+    audio.loop = true;
+    const alarmInput = document.querySelector("input[name='alarm']");
+    const setAlarm = document.getElementById('set-alarm');
+    const clearAlarm = document.getElementById('clear-alarm');
+    const alarmList = document.getElementById('alarm-list');
+    const alarmText = document.getElementById('alarm-text');
+
+    let alarmTime = null;
+    let alarmTimeout = null;
+
     //Récupère l'heure saisie dans l'input de l'alarme
     alarmInput.addEventListener('change', (event) => {
         alarmTime = alarmInput.value ;
     })
+
+    let hoursLeft = 0;
+    let minutesLeft = 0;
+    let secondsLeft = 0;
+
+    function alarmTimer(){
+
+        if(hoursLeft.value == 0 && minutesLeft.value == 0 && secondsLeft.value == 0) {
+            
+        }
+            
+        if ( secondsLeft.value != 0) {
+            secondsLeft.value --;
+            if ( secondsLeft.value <10 ) {
+                secondsLeft.value = '0' + secondsLeft.value
+            };
+            
+        } else if ( minutesLeft.value != 0 && secondsLeft.value == 0) {
+            minutesLeft.value --;
+            secondsLeft.value = 59;
+                
+            if ( minutesLeft.value <10 ) {
+                minutesLeft.value = '0' + minutesLeft.value
+            }
+            
+        } else if ( hoursLeft.value != 0 && minutesLeft.value == 0 && secondsLeft.value == 0) {
+            hoursLeft.value --;
+            minutesLeft.value = 59;
+            secondsLeft.value = 59;
+            if ( hoursLeft.value <10 ) {
+                hoursLeft.value = '0' + hoursLeft.value
+            }
+            
+        } 
+
+    }
 
     //Permet de set l'alarm si on appuie sur le bouton
     setAlarm.addEventListener('click', (event) => {
@@ -52,12 +91,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if(alarmTime) {
             const current = new Date();
             const timeToAlarm = new Date(alarmTime);
+            const li = document.createElement('li');
+            const frDateToAlarm = timeToAlarm.toLocaleDateString('fr');
+            const frTimeToAlarm = timeToAlarm.toLocaleTimeString('fr');
 
             //Si l'alarme est bien paramétrée pour un moment ultérieur à l'instant présent alors on paramètre l'alarme
             if(timeToAlarm > current ) {
                 const timeout = timeToAlarm.getTime() - current.getTime();
+                let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
+                let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
+                let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
+
+                alarmList.appendChild(li);
+                li.append(frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+
                 alarmTimeout = setTimeout(()=>audio.play(), timeout);
-                console.log(alarmTimeout);
                 alert('Alarm set');
             }
             
@@ -77,88 +125,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
         
     })
-
-    //MINUTEUR ---------------------------------------------------------------
-
-    var start = document.getElementById('start');
-    var reset = document.getElementById('reset');
-    var h = document.getElementById('hour');
-    var m = document.getElementById('minute');
-    var s = document.getElementById('second');
-
-    h.value = '0' + 0;
-    m.value = '0' + 0;
-    s.value = '0'+ 0;
-
-
-
-
-
-    var startTimer = null;
-
-    function timer(){
-
-        if(h.value == 0 && m.value == 0 && s.value == 0) {
-            stopTimer() ;
-
-        } else if ( s.value != 0) {
-            s.value --;
-            if ( s.value <10 ) {
-                s.value = '0' + s.value
-            };
-            
-        } else if ( m.value != 0 && s.value == 0) {
-            m.value --;
-            s.value = 59;
-                
-            if ( m.value <10 ) {
-                m.value = '0' + m.value
-            }
-            
-        } else if ( h.value != 0 && m.value == 0 && s.value == 0) {
-            h.value --;
-            m.value = 59;
-            s.value = 59;
-            if ( h.value <10 ) {
-                h.value = '0' + h.value
-            }
-            
-        } 
-
-
-        
-
-    }
-
-    function stopTimer(){
-        clearInterval(startTimer);
-    }
-
-
-
-    start.addEventListener('click', (event) => {
-        //Appelle la fonction timer toutes les 1000 millisecondes soit chaque seconde
-        function startInterval(){
-            startTimer = setInterval(function(){
-                timer(); 
-            }, 1000);
-
-        }
-        startInterval();
-        
-
-    })
-
-    
-    reset.addEventListener('click', (event) => {
-        h.value = '00' ;
-        m.value = '00' ;
-        s.value = '00' ;
-        stopTimer() ;
-
-    })
-
-
 
 
 
