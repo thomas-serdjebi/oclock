@@ -78,14 +78,15 @@ body, html {
 }
 
 .time {
-    justify-self:center;
-    align-self:center;
+    justify-self:right;
+    align-self:right;
     border:none;
     background-color:black;
     font-size:50px;
     width:70px;
     height:50px;
     color:white;
+    text-align:right;
 }
 
 #hour {
