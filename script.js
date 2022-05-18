@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //CREATION ET PARAMETRAGE DE L'ALARME  ----------------------------
 
     const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
-    audio.loop = true;
     const alarmInput = document.querySelector("input[name='alarm']");
     const setAlarm = document.getElementById('set-alarm');
     const clearAlarm = document.getElementById('clear-alarm');
@@ -52,38 +51,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let minutesLeft = 0;
     let secondsLeft = 0;
 
-    function alarmTimer(){
-
-        if(hoursLeft.value == 0 && minutesLeft.value == 0 && secondsLeft.value == 0) {
-            
-        }
-            
-        if ( secondsLeft.value != 0) {
-            secondsLeft.value --;
-            if ( secondsLeft.value <10 ) {
-                secondsLeft.value = '0' + secondsLeft.value
-            };
-            
-        } else if ( minutesLeft.value != 0 && secondsLeft.value == 0) {
-            minutesLeft.value --;
-            secondsLeft.value = 59;
-                
-            if ( minutesLeft.value <10 ) {
-                minutesLeft.value = '0' + minutesLeft.value
-            }
-            
-        } else if ( hoursLeft.value != 0 && minutesLeft.value == 0 && secondsLeft.value == 0) {
-            hoursLeft.value --;
-            minutesLeft.value = 59;
-            secondsLeft.value = 59;
-            if ( hoursLeft.value <10 ) {
-                hoursLeft.value = '0' + hoursLeft.value
-            }
-            
-        } 
-
-    }
-
     //Permet de set l'alarm si on appuie sur le bouton
     setAlarm.addEventListener('click', (event) => {
 
@@ -101,9 +68,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
                 let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
                 let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
-
                 alarmList.appendChild(li);
+                li.setAttribute('class', 'alarm-element');
                 li.append(frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+
+                function alarmTimer(){
+
+                    if ( secondsLeft != 0) {
+                        secondsLeft --;
+            
+                    } else if ( minutesLeft != 0 && secondsLeft == 0) {
+                        minutesLeft --;
+                        secondsLeft = 59;
+                        
+                    } else if ( hoursLeft != 0 && minutesLeft == 0 && secondsLeft == 0) {
+                        hoursLeft --;
+                        minutesLeft= 59;
+                        secondsLeft = 59;
+                        
+                    } 
+            
+                   
+                    li.innerText = frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
+            
+                }
+
+                setInterval(alarmTimer, 1000);
+
 
                 alarmTimeout = setTimeout(()=>audio.play(), timeout);
                 alert('Alarm set');
@@ -111,6 +102,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
         }
     })
+
+  
+
 
     //Permet d'unset l'alarm si on appuie sur le bouton
     clearAlarm.addEventListener('click', (event) => {
@@ -125,6 +119,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
         
     })
+
+    
+    
+
 
 
 
