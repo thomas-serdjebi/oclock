@@ -33,11 +33,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //CREATION ET PARAMETRAGE DE L'ALARME  ----------------------------
 
     const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
+    audio.loop = true;
     const alarmInput = document.querySelector("input[name='alarm']");
     const setAlarm = document.getElementById('set-alarm');
     const clearAlarm = document.getElementById('clear-alarm');
     const alarmList = document.getElementById('alarm-list');
-    const alarmText = document.getElementById('alarm-text');
+
 
     let alarmTime = null;
     let alarmTimeout = null;
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const li = document.createElement('li');
             const frDateToAlarm = timeToAlarm.toLocaleDateString('fr');
             const frTimeToAlarm = timeToAlarm.toLocaleTimeString('fr');
+            const alarmText = document.getElementById('alarm-text');
 
             //Si l'alarme est bien paramétrée pour un moment ultérieur à l'instant présent alors on paramètre l'alarme
             if(timeToAlarm > current ) {
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
                 alarmList.appendChild(li);
                 li.setAttribute('class', 'alarm-element');
-                li.append(frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+                li.append(alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
 
                 function alarmTimer(){
 
@@ -89,16 +91,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     } 
             
                    
-                    li.innerText = frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
+                    li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
+
+                    if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
+
+                        li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' passée ! ';
+                    }
+
             
-                }
+                } 
+                
+
 
                 setInterval(alarmTimer, 1000);
 
 
                 alarmTimeout = setTimeout(()=>audio.play(), timeout);
-                alert('Alarm set');
+                alert(alarmText.value);
+            } else {
+                alert("");
             }
+        
             
         }
     })
@@ -110,13 +123,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     clearAlarm.addEventListener('click', (event) => {
         audio.pause();
 
-        //Reset l'alarmTimeout
-        if(alarmTimeout) {
-            clearTimeout(alarmTimeout);
-            alert('Alarm cleared');
-            console.log(alarmTimeout);
-            alarmInput.value = '';
-        }
         
     })
 
