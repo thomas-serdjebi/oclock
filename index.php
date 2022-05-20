@@ -20,7 +20,7 @@
             <!-- HORLOGE + ALARM -->
             <div id="alarm">
                 
-                <input type="datetime-local" name="alarm" id="alarm">
+                <input type="time" name="alarm" id="alarm">
                 <input type="text" name="alarm-text" id="alarm-text">
                 <div class="controls">
                     <button class="button set-alarm" id="set-alarm">Set alarm</button>

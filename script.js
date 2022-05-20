@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //CREATION ET AFFICHAGE DE L'HORLOGE  ----------------------------------------
 
     const display = document.getElementById('clock');
+    const date ='';
+  
 
     function updateTime(){
         let date = new Date();
@@ -24,7 +26,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         display.innerText=`${hour}:${minutes}:${seconds}`;
 
+        return date;
+
     }
+
+    
+
+   
 
     setInterval(updateTime, 1000);
 
@@ -57,60 +65,80 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         //Si l'input est rempli alors...
         if(alarmTime) {
+
+            const alarmTime = alarmInput.value + ':00'
             const current = new Date();
-            const timeToAlarm = new Date(alarmTime);
+            
             const li = document.createElement('li');
-            const frDateToAlarm = timeToAlarm.toLocaleDateString('fr');
-            const frTimeToAlarm = timeToAlarm.toLocaleTimeString('fr');
             const alarmText = document.getElementById('alarm-text');
 
-            //Si l'alarme est bien paramétrée pour un moment ultérieur à l'instant présent alors on paramètre l'alarme
-            if(timeToAlarm > current ) {
-                const timeout = timeToAlarm.getTime() - current.getTime();
-                let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
-                let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
-                let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
-                alarmList.appendChild(li);
-                li.setAttribute('class', 'alarm-element');
-                li.append(alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+            function alarmTimer(){
+                let currentTime = new Date();
+                let alarmDate = currentTime.toLocaleDateString('en');
+                let alarmString = alarmDate + ' ' +alarmTime ;
+                let alarmSetTime = new Date(alarmString);
 
-                function alarmTimer(){
+                // alarmTime = alarmTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-                    if ( secondsLeft != 0) {
-                        secondsLeft --;
+                //pour l'alrm time, créer une nouvelle variable qui reprend la date du jour + l'heure choisie pour l'alrm et transformer en variable datetime
             
-                    } else if ( minutesLeft != 0 && secondsLeft == 0) {
-                        minutesLeft --;
-                        secondsLeft = 59;
-                        
-                    } else if ( hoursLeft != 0 && minutesLeft == 0 && secondsLeft == 0) {
-                        hoursLeft --;
-                        minutesLeft= 59;
-                        secondsLeft = 59;
-                        
-                    } 
+                //considérer que si l'heure de l'alarme est plus tard que l'heure actuelle, 
+                //alors le timetoalarm sera le jour j et que si l'heure de l'alarme est plus tot
+                // que l'heure actuelle, alors le timetoalarm sera le lendemain, donc faudra y ajouter un jour :)
+                if (currentTime < alarmSetTime) {
+                    const timeToAlarm = new Date(alarmSetTime);
+                    console.log(timeToAlarm);
             
+                } else {
+                    alarmSetTime.setDate(alarmSetTime.getDate() + 1)
+                    const timeToAlarm = new Date(alarmSetTime);
+                    console.log(timeToAlarm);
+                    
+                    
+                    
+                }
+
+                // const timeout = timeToAlarm.getTime() - current.getTime();
+                // let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
+                // let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
+                // let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
+                // alarmList.appendChild(li);
+                // li.setAttribute('class', 'alarm-element');
+                // li.append(alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+
+                // if ( secondsLeft != 0) {
+                //     secondsLeft --;
+        
+                // } else if ( minutesLeft != 0 && secondsLeft == 0) {
+                //     minutesLeft --;
+                //     secondsLeft = 59;
+                    
+                // } else if ( hoursLeft != 0 && minutesLeft == 0 && secondsLeft == 0) {
+                //     hoursLeft --;
+                //     minutesLeft= 59;
+                //     secondsLeft = 59;
+
+                // }
+                    
                    
-                    li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
+                // li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
 
-                    if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
+                // if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
 
-                        li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' passée ! ';
-                    }
+                //     li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' passée ! ';
+                // }
 
             
-                } 
+            } 
                 
 
 
-                setInterval(alarmTimer, 1000);
+            setInterval(alarmTimer, 1000);
 
 
-                alarmTimeout = setTimeout(()=>audio.play(), timeout);
-                alert(alarmText.value);
-            } else {
-                alert("");
-            }
+            // alarmTimeout = setTimeout(()=>audio.play(), timeout);
+            // alert(alarmText.value);
+            
         
             
         }
