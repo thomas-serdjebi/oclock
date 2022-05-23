@@ -3,7 +3,8 @@ body, html {
     padding: 0;
     background-color: black;
     text-align:center;
-    
+    list-style-type: none;
+
 }
 
 .row_container {
@@ -43,7 +44,12 @@ body, html {
 
 #alarm-list {
     color:white;
+    list-style-type: none;
 }
+
+
+
+
 #countdown-timer {
     height:200px;
     width:700px;

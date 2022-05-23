@@ -70,78 +70,71 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const current = new Date();
             
             const li = document.createElement('li');
-            const alarmText = document.getElementById('alarm-text');
+            li.setAttribute('class', 'alarm-element'); 
+            let alarmText = document.getElementById('alarm-text').value ;
+
+
+            let currentTime = new Date();
+            let alarmDate = currentTime.toLocaleDateString('en');
+            let alarmString = alarmDate + ' ' +alarmTime ;
+            let alarmSetTime = new Date(alarmString);
+            var stringDay = '';
+            let timeToAlarm = '';
+
+            if ( alarmText != '') {
+                alarmText = alarmText + ' : '
+            }
+
+            if (currentTime < alarmSetTime) {
+                timeToAlarm = new Date(alarmSetTime);
+                stringDay = "aujourd'hui à ";
+        
+            } else {
+                alarmSetTime.setDate(alarmSetTime.getDate() + 1)
+                timeToAlarm = new Date(alarmSetTime);
+                stringDay = "demain à ";
+
+            }
+            
+            alarmList.appendChild(li);
+             
+            const timeout = timeToAlarm.getTime() - currentTime.getTime();
+            let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
+            let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
+            let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
+            let frTimeToAlarm = timeToAlarm.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
             function alarmTimer(){
-                let currentTime = new Date();
-                let alarmDate = currentTime.toLocaleDateString('en');
-                let alarmString = alarmDate + ' ' +alarmTime ;
-                let alarmSetTime = new Date(alarmString);
 
-                // alarmTime = alarmTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                if ( secondsLeft != 0) {
+                    secondsLeft --;
+        
+                } else if ( minutesLeft != 0 && secondsLeft == 0) {
+                    minutesLeft --;
+                    secondsLeft = 59;
+                    
+                } else if ( hoursLeft != 0 && minutesLeft == 0 && secondsLeft == 0) {
+                    hoursLeft --;
+                    minutesLeft= 59;
+                    secondsLeft = 59;
 
-                //pour l'alrm time, créer une nouvelle variable qui reprend la date du jour + l'heure choisie pour l'alrm et transformer en variable datetime
-            
-                //considérer que si l'heure de l'alarme est plus tard que l'heure actuelle, 
-                //alors le timetoalarm sera le jour j et que si l'heure de l'alarme est plus tot
-                // que l'heure actuelle, alors le timetoalarm sera le lendemain, donc faudra y ajouter un jour :)
-                if (currentTime < alarmSetTime) {
-                    const timeToAlarm = new Date(alarmSetTime);
-                    console.log(timeToAlarm);
-            
-                } else {
-                    alarmSetTime.setDate(alarmSetTime.getDate() + 1)
-                    const timeToAlarm = new Date(alarmSetTime);
-                    console.log(timeToAlarm);
-                    
-                    
-                    
                 }
 
-                // const timeout = timeToAlarm.getTime() - current.getTime();
-                // let hoursLeft = Math.trunc((timeout / 1000 / 60 / 60));
-                // let minutesLeft = Math.trunc((timeout / 1000 / 60) - (hoursLeft*60))
-                // let secondsLeft = Math.trunc((timeout / 1000 ) - (hoursLeft*60*60) - (minutesLeft*60))
-                // alarmList.appendChild(li);
-                // li.setAttribute('class', 'alarm-element');
-                // li.append(alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' );
+                let stringAlarm = alarmText + stringDay + frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
 
-                // if ( secondsLeft != 0) {
-                //     secondsLeft --;
-        
-                // } else if ( minutesLeft != 0 && secondsLeft == 0) {
-                //     minutesLeft --;
-                //     secondsLeft = 59;
-                    
-                // } else if ( hoursLeft != 0 && minutesLeft == 0 && secondsLeft == 0) {
-                //     hoursLeft --;
-                //     minutesLeft= 59;
-                //     secondsLeft = 59;
-
-                // }
-                    
-                   
-                // li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' dans '+hoursLeft+ ' heures, '+minutesLeft + ' minutes, '+secondsLeft + ' secondes' ;
-
-                // if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
-
-                //     li.innerText = alarmText.value + ' : ' + frDateToAlarm + ' '+ frTimeToAlarm + ' passée ! ';
-                // }
-
+                if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
+                    stringAlarm = alarmText + frTimeToAlarm + ' passée ! ';
+                }
+ 
+                li.innerText = stringAlarm;
             
-            } 
-                
+            }
 
-
-            setInterval(alarmTimer, 1000);
-
-
-            // alarmTimeout = setTimeout(()=>audio.play(), timeout);
-            // alert(alarmText.value);
-            
-        
-            
+            alarmTimeout = setTimeout(()=>audio.play(), timeout);
+            alert(alarmText);  
         }
+
+        setInterval(alarmTimer, 1000);
     })
 
   
@@ -150,8 +143,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //Permet d'unset l'alarm si on appuie sur le bouton
     clearAlarm.addEventListener('click', (event) => {
         audio.pause();
-
-        
     })
 
     
