@@ -1,42 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
 
-    //CREATION ET AFFICHAGE DE L'HORLOGE  ----------------------------------------
-
-    const display = document.getElementById('clock');
-    const date ='';
-  
-
-    function updateTime(){
-        let date = new Date();
-        let hour = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-
-        if (hour<10) {
-            hour = '0'+hour
-        }
-
-        if (minutes<10) {
-            minutes ='0'+ minutes
-        }
-
-        if (seconds<10) {
-            seconds = '0'+ seconds
-        }
-
-        display.innerText=`${hour}:${minutes}:${seconds}`;
-
-        return date;
-
-    }
-
-    
-
-   
-
-    setInterval(updateTime, 1000);
-
-
 
     //CREATION ET PARAMETRAGE DE L'ALARME  ----------------------------
 
@@ -85,11 +48,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 alarmText = alarmText + ' : '
             }
 
+            //Si l'heure de l'larme est supérieure à l'heure actuelle on considère que l'alarme est pour le jour J
+            //sinon l'alarme est pour le lendemain;
             if (currentTime < alarmSetTime) {
                 timeToAlarm = new Date(alarmSetTime);
                 stringDay = "aujourd'hui à ";
         
-            } else {
+            } else { 
                 alarmSetTime.setDate(alarmSetTime.getDate() + 1)
                 timeToAlarm = new Date(alarmSetTime);
                 stringDay = "demain à ";
@@ -145,19 +110,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         audio.pause();
     })
 
-    
-    
-
-
-
-
-
-
-
-
-   
-
-  
 
     
 

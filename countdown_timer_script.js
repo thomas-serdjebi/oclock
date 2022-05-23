@@ -1,5 +1,7 @@
-
+document.addEventListener('DOMContentLoaded', (event) => {
     //MINUTEUR ---------------------------------------------------------------
+
+    console.log('bonjour');
 
     var start = document.getElementById('start');
     var reset = document.getElementById('reset');
@@ -75,5 +77,7 @@
         stopTimer() ;
 
     })
+
+})
 
 
