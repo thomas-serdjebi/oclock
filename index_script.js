@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         textArray.forEach((letter, i) =>
         setTimeout(() => (element.innerHTML += letter), 50 * i)
         );
-        setInterval(() => typeWriter(element), 100000);
+        
     }
 
     function display(element) {

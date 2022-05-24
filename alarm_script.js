@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
             const li = document.createElement('li');
             li.setAttribute('class', 'alarm-element'); 
-            let alarmText = document.getElementById('alarm-text').value ;
+            let alarmText = document.getElementById('alarm-text').value.toUpperCase(); 
 
 
             let currentTime = new Date();
@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 if(hoursLeft == 0 && minutesLeft == 0 && secondsLeft == 0) {
                     stringAlarm = alarmText + frTimeToAlarm + ' passée ! ';
+                    li.setAttribute('class', 'passed')
+
                 }
  
                 li.innerText = stringAlarm;

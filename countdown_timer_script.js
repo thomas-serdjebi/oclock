@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     console.log('bonjour');
 
-    var start = document.getElementById('start');
-    var reset = document.getElementById('reset');
+    var startOrStop = document.getElementById('startOrStop');
     var h = document.getElementById('hour');
     var m = document.getElementById('minute');
     var s = document.getElementById('second');
+    var reset = document.getElementById('reset');
+    let isStopped = true;
+    
 
     h.value = '0' + 0;
     m.value = '0' + 0;
@@ -45,27 +47,51 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
         } 
 
+    }
 
-        
-
+    function startOrStopDisplay() {
+        if(isStopped == true) {
+            startOrStop.innerText = 'Start';
+        } else {
+            startOrStop.innerText = 'Stop';
+        }
     }
 
     function stopTimer(){
         clearInterval(startTimer);
+
     }
 
+    
 
+    
 
-    start.addEventListener('click', (event) => {
-        //Appelle la fonction timer toutes les 1000 millisecondes soit chaque seconde
-        function startInterval(){
-            startTimer = setInterval(function(){
-                timer(); 
-            }, 1000);
+    startOrStop.addEventListener('click', (event) => {
 
-        }
-        startInterval();
         
+
+        if ( isStopped == true ) {
+            //Appelle la fonction timer toutes les 1000 millisecondes soit chaque seconde
+            isStopped = false;
+
+            function startInterval(){
+                startTimer = setInterval(function(){
+                    timer(); 
+                }, 1000);
+
+                
+
+            }
+            startInterval();
+            
+
+        } else if (isStopped == false ) {
+            isStopped = true;
+            stopTimer();
+        }
+        startOrStopDisplay();
+
+
 
     })
 

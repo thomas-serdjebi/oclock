@@ -1,0 +1,105 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    text-align:center;
+    list-style-type: none;
+    color:white;
+    font-family: 'Orbitron', sans-serif;
+
+}
+
+main {
+    width:80%;
+    margin: 0 auto;
+    margin-top:5%;
+    font-family: 'Orbitron', sans-serif;
+}
+
+
+
+.row_container {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    margin-top:5%;
+    margin-bottom:5%;
+}
+
+
+/*ALARM */
+
+input {
+    height:40%;
+    font-family: 'Orbitron', sans-serif;
+    font-size:1vw;
+    
+}
+
+#alarm {
+    width:40%;
+}
+
+#alarm-input {
+    width:30%;
+    font-size:2vw;
+    padding-left:2%;
+}
+
+#alarm-text {
+    width:60%;
+    text-align:center;
+    font-size:1vw;
+    position:relative;
+    bottom:5%;
+}
+
+input::placeholder {
+    font-family: 'Orbitron', sans-serif;
+    font-size:1.5vw;
+    position:relative;
+    top:5%;
+    left:2%;
+    
+}
+
+.passed {
+    color:red !important;
+}
+
+li {
+    margin-bottom:1%;
+}
+
+
+.controls {
+    margin-top:16px;
+}
+
+.button {
+    border-radius:5px;
+    border:none;
+    color:white;
+    padding : 4px 8px;
+    margin-left:4px;
+    cursor: pointer;
+    width:40%;
+    font-size:1.2vw;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.set-alarm {
+    background-color: blue;
+    
+}
+
+.clear-alarm {
+    background-color:red;
+ 
+}
+
+#alarm-list {
+    color:white;
+    list-style-type: none;
+    font-weight:500;
+}
