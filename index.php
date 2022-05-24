@@ -20,14 +20,15 @@
 
             <h1>Welcome to HighTime</h1>
 
-            <h2>A Javascript oriented school project</h2>
+            <h2>A Javascript school project</h2>
 
             <h3>What do you need ?</h3>
 
-            <div class="links"></div>
-            <h4><a href="countdown_timer.php">A countdown timer ?</a></h4>
-            <h4><a href="chronometer.php">A chronometer ?</a></h4>
-            <h4><a href="alarm.php">An alarm ?</a></h4>
+            <div class="display_flex">
+                <h4><a href="countdown_timer.php" id="countdown">A countdown timer ?</a></h4>
+                <h4><a href="chronometer.php" id="chronometer">A chronometer ?</a></h4>
+                <h4><a href="alarm.php" id="alarm">An alarm ?</a></h4>
+            </div>
 
         </main>
 

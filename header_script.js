@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //CREATION ET AFFICHAGE DE L'HORLOGE  ----------------------------------------
 
     const display = document.getElementById('clock');
-    const date ='';
+    
   
 
     function updateTime(){
