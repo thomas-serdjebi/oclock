@@ -6,6 +6,7 @@ body, html {
     list-style-type: none;
     color:white;
     font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
 
 }
 
@@ -14,6 +15,11 @@ main {
     margin: 0 auto;
     margin-top:5%;
     font-family: 'Orbitron', sans-serif;
+}
+
+h1 {
+    margin-bottom:2%;
+    font-size:4vw;
 }
 
 

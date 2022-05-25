@@ -3,13 +3,13 @@
     <head>
     <meta charset="utf-8">
     <title>Oclock</title>
-    <link rel="stylesheet" href="countdown_timer_style.css">
-    <link rel="stylesheet" href="header.css">
     <script src="header_script.js"></script>
     <script src="countdown_timer_script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="countdown_timer_style.css">
+    <link rel="stylesheet" href="header.css">
     </head>
 
     <body>

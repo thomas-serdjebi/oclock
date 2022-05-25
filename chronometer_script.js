@@ -78,8 +78,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function startOrStop (){
         if ( isStopped == true) {
             startAndStop.innerText = 'Start';
+            startAndStop.setAttribute('class', 'button-blue')
         } else {
             startAndStop.innerText = 'Stop';
+            startAndStop.setAttribute('class', 'button-red')
         }
     }
 
@@ -105,6 +107,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     reset.addEventListener('click', (event) => {
         resetTimer();
         startOrStop();
+        roundList.innerHTML='';
+        
         
     })
 

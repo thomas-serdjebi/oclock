@@ -28,6 +28,11 @@ main {
     grid-template-rows: repeat(3, 1fr);
 }
 
+h1 {
+    margin-bottom:2%;
+    font-size:4vw;
+}
+
 .label {
     margin : 0 ;
     justify-self:center;

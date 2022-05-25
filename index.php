@@ -5,11 +5,11 @@
     <title>Oclock</title>
     <link rel="stylesheet" href="index_style.css">
     <link rel="stylesheet" href="header.css">
-    <script src="header_script.js"></script>
-    <script src="index_script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <script src="header_script.js"></script>
+    <script src="index_script.js"></script>
     </head>
 
     <body>
